@@ -1,3 +1,5 @@
+<p><%= notice %></p>
+
 <% if @task.errors.any? %>
   <div id="error_explanation">
     <ul>
@@ -19,6 +21,6 @@
     <%= form.text_field :content %>
   </div>
 
-  <%= form.submit %>
+  <%= form.submit "登録する" %>
 
 <% end %>
