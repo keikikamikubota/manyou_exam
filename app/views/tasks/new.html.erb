@@ -1,15 +1,5 @@
 <h1>Tasks#new</h1>
 
-<% if @task.errors.any? %>
-  <div id="error_explanation">
-    <ul>
-    <% @task.errors.full_messages.each do |message| %>
-      <li><%= message %></li>
-    <% end %>
-    </ul>
-  </div>
-<% end %>
-
 <%= render 'form', task: @task %>
 
 <%= link_to '戻る', tasks_path %>

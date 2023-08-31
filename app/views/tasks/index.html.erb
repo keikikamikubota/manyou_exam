@@ -14,8 +14,10 @@
         <td><%= task.content %></td>
         
         <td><%= link_to "詳細", task %>
-        <%# <><%= link_to "編集", edit_task_path(task) %>
+        <td><%= link_to "編集", edit_task_path(task) %></td>
         <%# <td><%= link_to "削除", task, method: :delete, data: { confirm: '本当に削除しますか？' } %></td> %> %>
       </tr>
     <% end %>
 </table>
+
+<%= link_to "タスクを登録する", new_task_path %>
