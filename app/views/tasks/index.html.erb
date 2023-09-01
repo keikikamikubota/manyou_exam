@@ -1,0 +1,25 @@
+<p><%= flash[:notice] %></p>
+
+<h1>Task一覧</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>name</th>
+      <th>content</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @tasks.each do |task|%>
+      <tr>
+        <td><%= task.name %></td>
+        <td><%= task.content %></td>
+        
+        <td><%= link_to "詳細", task %>
+        <td><%= link_to "編集", edit_task_path(task) %></td>
+        <td><%= link_to "削除", task, method: :delete, data: { confirm: '本当に削除しますか？' } %></td>
+      </tr>
+    <% end %>
+</table>
+
+<%= link_to "登録する", new_task_path %>

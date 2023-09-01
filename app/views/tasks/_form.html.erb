@@ -1,0 +1,26 @@
+<p><%= notice %></p>
+
+<% if @task.errors.any? %>
+  <div id="error_explanation">
+    <ul>
+    <% @task.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= form_with(model: @task, local: true) do |form| %>
+  <div class="field">
+    <%= form.label :"name" %><br>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :"content" %><br>
+    <%= form.text_field :content %>
+  </div>
+
+  <%= form.submit "登録する" %>
+
+<% end %>
