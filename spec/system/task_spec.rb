@@ -7,8 +7,8 @@ describe 'タスク管理機能', type: :system do
         visit new_task_path
       # 2. 新規登録内容を入力する
       #「タスク名」というラベル名の入力欄と、「タスク詳細」というラベル名の入力欄にタスクのタイトルと内容をそれぞれ入力する
-        fill_in 'Name', with: 'foo@example.com'
-        fill_in 'Content', with: '123456'
+        fill_in 'タスク名', with: 'foo@example.com'
+        fill_in '内容', with: '123456'
       # 3. 「登録する」というvalue（表記文字）のあるボタンをクリックする
         click_on '登録する'
       # 4. clickで登録されたはずの情報が、タスク詳細ページに表示されているかを確認する
@@ -16,7 +16,22 @@ describe 'タスク管理機能', type: :system do
         visit tasks_path
         expect(page).to have_content '123456'
       # ここにタスク詳細ページに、テストコードで作成したデータがタスク詳細画面に
-      # have_contentされているか（含まれているか）を確認（期待）するコードを書く
+      # have_内容されているか（含まれているか）を確認（期待）するコードを書く
+      end
+    end
+    context 'タスクが作成日時の降順に並んでいる場合' do
+      it '新しいタスクが一番上に表示される' do
+        visit new_task_path
+        fill_in 'タスク名', with: 'foo@example.com'
+        fill_in '内容', with: '123456'
+        click_on '登録する'
+        visit new_task_path
+        fill_in 'タスク名', with: 'bar@example.com'
+        fill_in '内容', with: '7890123'
+        click_on '登録する'
+        visit tasks_path
+        task_list = all('task_row')
+        expect(page).to have_content '7890123'
       end
     end
   end
