@@ -33,6 +33,19 @@ describe 'タスク管理機能', type: :system do
         task_list = all('task_row')
         expect(page).to have_content '7890123'
       end
+      it '終了期限も登録されている'
+      visit new_task_path
+      fill_in 'タスク名', with: 'foo@example.com'
+      fill_in '内容', with: '123456'
+      fill_in '終了期限', with 'Date.current.tommorow'
+      click_on '登録する'
+      visit new_task_path
+      fill_in 'タスク名', with: 'foo@example.com'
+      fill_in '内容', with: '7789'
+      fill_in '終了期限', with 'Date.current.tommorow'
+      visit tasks_path
+      task_list = all('task_expired_at')
+      expect(page).to 
     end
   end
 end

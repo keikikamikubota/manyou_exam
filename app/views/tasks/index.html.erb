@@ -18,7 +18,7 @@
         <td><%= task.name %></td>
         <td><%= task.content %></td>
         <td class="task_row"><%= task.created_at %></td>
-        <td class=""><%= task.expired_at %></td>
+        <td class="task_expired_at"><%= task.expired_at %></td>
         <td><%= link_to "詳細", task %>
         <td><%= link_to "編集", edit_task_path(task) %></td>
         <td><%= link_to "削除", task, method: :delete, data: { confirm: '本当に削除しますか？' } %></td>
