@@ -4,4 +4,6 @@ class Task < ApplicationRecord
 
   scope :latest, -> {order(created_at: :desc)}
   scope :sort_expired, -> {order(expired_at: :desc)}
+
+  
 end

@@ -19,7 +19,6 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
   end
 
-
   def create
     @task = Task.new(task_params)
     if @task.save
