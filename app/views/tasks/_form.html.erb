@@ -24,6 +24,13 @@
     <%= form.date_field :expired_at %>
   </div>
 
+  <div class="field">
+    <%= form.label :"status" %><br>
+    <%= form.select :status, [ ["未着手", 0], ["着手中", 1], ["完了", 2] ], include_blank: true %>
+  </div>
+
+  <br>
+
   <%= form.submit "登録する" %>
 
 <% end %>
