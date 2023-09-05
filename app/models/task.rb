@@ -4,6 +4,7 @@ class Task < ApplicationRecord
 
   scope :latest, -> {order(created_at: :desc)}
   scope :sort_expired, -> {order(expired_at: :desc)}
+  scope :n_search, -> (name_catched){Task.where("name LIKE?", "%#{name_catched}%")}
 
   enum status:{
     not_started: 0, #未着手

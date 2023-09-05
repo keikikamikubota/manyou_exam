@@ -1,6 +1,12 @@
 <h1>Task一覧</h1>
 <%= link_to "終了期限でソートする", tasks_path(sort_expired: "true") %>
 
+<%= form_with(url: tasks_path, local: true, method: :get) do |form|%>
+  <%= form.search_field :name_search %>
+    <% form.label :name %>
+  <%= form.submit "検索する" %>
+<% end %>
+
 <table>
   <thead>
     <tr>
@@ -8,6 +14,7 @@
       <th>content</th>
       <th>created_at</th>
       <th>expired_at</th>
+      <th>status</th>
     </tr>
   </thead>
   <tbody>
@@ -17,7 +24,7 @@
         <td><%= task.content %></td>
         <td class="task_row"><%= l task.created_at %></td>
         <td class="task_expired_at"><%= l task.expired_at, format: :short %></td>
-        <td><%= task.status %></td>
+        <td><%= t("enum.task.status.#{task.status}") %></td>
         <td><%= link_to "詳細", task %>
         <td><%= link_to "編集", edit_task_path(task) %></td>
         <td><%= link_to "削除", task, method: :delete, data: { confirm: '本当に削除しますか？' } %></td>

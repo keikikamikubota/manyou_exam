@@ -18,12 +18,13 @@ RSpec.describe 'タスク管理機能', type: :system do
         fill_in 'タスク名', with: 'foo@example.com'
         fill_in '内容', with: '123456'
         click_on '登録する'
-        visit new_task_path(wait: 30)
+        sleep 5
+        visit new_task_path
         fill_in 'タスク名', with: 'bar@example.com'
         fill_in '内容', with: '7890123'
         click_on '登録する'
         visit tasks_path
-        task_list = all('task_row', wait: 30) #selenium関連のエラー回避のためwaitを追記
+        task_list = all('task_row')
         expect(page).to have_content '7890123'
       end
       it '終了期限も登録されている' do
@@ -31,9 +32,11 @@ RSpec.describe 'タスク管理機能', type: :system do
           visit new_task_path
           fill_in 'タスク名', with: 'wee@example.com'
           fill_in '内容', with: '7789'
-          fill_in '終了期限', with: '2023,9,1'
+          fill_in '終了期限', with: DateTime.new(2023, 9, 1 )
           click_on '登録する'
-          visit tasks_path(wait: 50)
+          binding.pry
+          visit tasks_path
+          sleep 5 #selenium関連のエラー回避のためsleepを追記
           expect(page).to have_content '2023年09月01日'
         end
       end

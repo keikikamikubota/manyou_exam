@@ -7,7 +7,12 @@
   <strong>content:</strong> <%= @task.content %>
 </p>
 <p>
-  <strong>expired_at:</strong> <%= @task.expired_at %>
+<strong>task_created_at:</strong> <%= l @task.created_at %>
+<p>
+<p>
+<strong>task_expired_at:</strong> <%= l @task.expired_at %>
+<p>
+  <strong>status:</strong> <%= @task.status %>
 </p>
 
 <%# <%= link_to "編集", edit_property_path(@property) %>

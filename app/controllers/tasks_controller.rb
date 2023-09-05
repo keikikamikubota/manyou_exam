@@ -5,6 +5,9 @@ class TasksController < ApplicationController
     else
       @tasks = Task.all.latest
     end
+    if params[:name_search].present?
+        @tasks = Task.n_search(params[:name_search]).latest
+    end
   end
 
   def show
@@ -41,12 +44,12 @@ class TasksController < ApplicationController
   def destroy
     @task = Task.find(params[:id])
     @task.destroy
-    redirect_to tasks_path, notice: "タスクが削除されました"
+    redirect_to tasks_path, flash: {success: "タスクが削除されました"}
   end
 
   private
 
   def task_params
-      params.require(:task).permit(:name, :content, :expired_at, :sort_expired)
+      params.require(:task).permit(:name, :content, :expired_at, :sort_expired, :status)
   end
 end

@@ -176,8 +176,14 @@ ja:
       words_connector: "、"
   time:
     am: 午前
+    pm: 午後
     formats:
       default: "%Y年%m月%d日(%a) %H時%M分%S秒"
       long: "%Y/%m/%d %H:%M"
       short: "%Y年%m月%d日(%a)"
-    pm: 午後
+  enum:
+    task:
+      status:
+        not_started: 未着手
+        started: 着手中
+        completed: 完了
