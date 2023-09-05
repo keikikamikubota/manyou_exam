@@ -5,8 +5,11 @@ class TasksController < ApplicationController
     else
       @tasks = Task.all.latest
     end
+    if params[:status_search].present?
+      @tasks = Task.s_search(params[:status_search]).latest
+    end
     if params[:name_search].present?
-        @tasks = Task.n_search(params[:name_search]).latest
+      @tasks = Task.n_search(params[:name_search]).latest
     end
   end
 
