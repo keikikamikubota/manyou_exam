@@ -8,8 +8,8 @@ class Task < ApplicationRecord
   scope :s_search, -> (status_param){Task.where(status: (status_param))}
 
   enum status:{
-    not_started: 0, #未着手
-    started: 1, #着手中
-    completed: 2, #完了
+    未着手: 0, #not_startedから変換していたが、直接日本語表記に変更
+    着手中: 1,
+    完了: 2,
   }
 end
