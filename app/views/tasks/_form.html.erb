@@ -10,23 +10,28 @@
 
 <%= form_with(model: @task, local: true) do |form| %>
   <div class="field">
-    <%= form.label :"name" %><br>
+    <%= form.label :"タスク名" %><br>
     <%= form.text_field :name %>
   </div>
 
   <div class="field">
-    <%= form.label :"content" %><br>
+    <%= form.label :"詳しい内容" %><br>
     <%= form.text_field :content %>
   </div>
 
   <div class="field">
-    <%= form.label :"expired_at" %><br>
+    <%= form.label :"終了期限" %><br>
     <%= form.date_field :expired_at %>
   </div>
 
   <div class="field">
-    <%= form.label :"status" %><br>
+    <%= form.label :"ステータス" %><br>
     <%= form.select :status, Task.statuses.keys.to_a, { include_blank: '選択してください' } %>
+  </div>
+
+  <div class="field">
+    <%= form.label :"優先度" %><br>
+    <%= form.select :priority, Task.priorities.keys.to_a, { include_blank: '選択してください' } %>
   </div>
 
   <br>
