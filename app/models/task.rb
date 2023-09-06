@@ -4,8 +4,9 @@ class Task < ApplicationRecord
 
   scope :latest, -> {order(created_at: :desc)}
   scope :sort_expired, -> {order(expired_at: :desc)}
-  scope :n_search, -> (name_param){Task.where("name LIKE?", "%#{name_param}%")}
-  scope :s_search, -> (status_param){Task.where(status: (status_param))}
+  scope :n_search, -> (name_param){ Task.where("name LIKE?", "%#{name_param}%") }
+  scope :s_search, -> (status_param){ Task.where(status: (status_param)) }
+  scope :both_search, -> (name_param, status_param){ Task.where("name LIKE?", "%#{name_param}%").where(status: (status_param)) }
 
   enum status:{
     未着手: 0, #not_startedから変換していたが、直接日本語表記に変更

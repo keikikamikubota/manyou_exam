@@ -2,16 +2,13 @@
 <%= link_to "終了期限でソートする", tasks_path(sort_expired: "true") %>
 
 <%= form_with(url: tasks_path, local: true, method: :get) do |form|%>
-  <%= form.search_field :name_search %>
-    <% form.label :name %>
-  <%= form.submit "あいまい検索する" %>
+<%= form.search_field :name_search %>
+  <% form.label :name %>
+  <%= form.select :status_search, Task.statuses.keys.to_a, {include_blank: '選択してください'} %>
+  <% form.label :status %>
+  <%= form.submit "ステータスとタスク名の検索をする" %>
 <% end %>
 
-<%= form_with(url: tasks_path, local: true, method: :get) do |form|%>
-  <%= form.select :status_search, Task.statuses.keys.to_a, {} %>
-    <% form.label :status %>
-  <%= form.submit "ステータス検索する" %>
-<% end %>
 
 
 <table>
@@ -25,13 +22,14 @@
     </tr>
   </thead>
   <tbody>
+
     <% @tasks.each do |task|%>
       <tr>
         <td><%= task.name %></td>
         <td><%= task.content %></td>
         <td class="task_row"><%= l task.created_at %></td>
         <td class="task_expired_at"><%= l task.expired_at, format: :short %></td>
-        <td><%= t("enums.task.status.#{task.status}") %></td>
+        <td><%= task.status %></td>
         <td><%= link_to "詳細", task %>
         <td><%= link_to "編集", edit_task_path(task) %></td>
         <td><%= link_to "削除", task, method: :delete, data: { confirm: '本当に削除しますか？' } %></td>

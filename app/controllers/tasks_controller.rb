@@ -1,15 +1,16 @@
 class TasksController < ApplicationController
   def index
     if params[:sort_expired]
-      @tasks = Task.all.sort_expired
+      @tasks = Task.all.sort_expired #sort_expiredなどスコープは全てモデルに記述
+    elsif(params[:status_search]).present? && (params[:name_search]).present?
+      @tasks = Task.both_search(params[:name_search], params[:status_search]).latest
+    elsif params[:name_search].present?
+      @tasks = Task.n_search(params[:name_search]).latest
+
+    elsif params[:status_search].present?
+      @tasks = Task.s_search(params[:status_search]).latest
     else
       @tasks = Task.all.latest
-    end
-    if params[:status_search].present?
-      @tasks = Task.s_search(params[:status_search]).latest
-    end
-    if params[:name_search].present?
-      @tasks = Task.n_search(params[:name_search]).latest
     end
   end
 
@@ -35,7 +36,7 @@ class TasksController < ApplicationController
 
   end
 
-  def update
+  def updatehttps://t.gyazo.com/teams/diveintocode/ae3edc6b420cf4b0307b8106907dcb32.png
     @task = Task.find(params[:id])
     if @task.update(task_params)
       redirect_to tasks_path, notice: "更新が完了しました"
