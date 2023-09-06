@@ -16,7 +16,7 @@ class TasksController < ApplicationController
     if params[:status_search].present?
       @tasks = @tasks.s_search(params[:status_search]).latest
     end
-    @tasks = @tasks.page(params[:page])
+    @tasks = @tasks.page(params[:page]) #kaminariのページネーションを追加
   end
 
   def show

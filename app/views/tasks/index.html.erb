@@ -5,22 +5,22 @@
   <%= form.search_field :name_search %>
   <%= form.label :"ステータス" %>
   <%= form.select :status_search, Task.statuses.keys.to_a, {include_blank: '選択してください'} %>
-  <%= form.submit "ステータスとタスク名の検索をする" %>
+  <%= form.submit "ステータスとタスク名の検索"  %>
 <% end %>
 
 <br>
 
-<%= link_to "登録する", new_task_path %>
+<%= link_to "新規登録", new_task_path, class: "btn btn-primary" %>
 
-<table>
+<table class="table table-striped">
   <thead>
     <tr>
       <th>タスク名</th>
       <th>詳しい内容</th>
-      <th><%= link_to "終了期限", tasks_path(sort_expired: "true") %></th>
+      <th><%= link_to "終了期限", tasks_path(sort_expired: "true"), class: "btn btn-outline-primary"  %></th>
       <th>登録日時</th>
       <th>ステータス</th>
-      <th><%= link_to "優先度", tasks_path(sort_priority: "true") %></th>
+      <th><%= link_to "優先度", tasks_path(sort_priority: "true"), class: "btn btn-outline-primary" %></th>
     </tr>
   </thead>
   <tbody>
@@ -33,9 +33,9 @@
         <td class="task_row"><%= l task.created_at, format: :short %></td>
         <td><%= task.status %></td>
         <td><%= task.priority %></td>
-        <td><%= link_to "詳細", task %>
-        <td><%= link_to "編集", edit_task_path(task) %></td>
-        <td><%= link_to "削除", task, method: :delete, data: { confirm: '本当に削除しますか？' } %></td>
+        <td><%= link_to "詳細", task, class: "btn btn-outline-primary" %>
+        <td><%= link_to "編集", edit_task_path(task), class: "btn btn-outline-success" %></td>
+        <td><%= link_to "削除", task, method: :delete, data: { confirm: '本当に削除しますか？' }, class: "btn btn-outline-secondary" %></td>
       </tr>
     <% end %>
 </table>
