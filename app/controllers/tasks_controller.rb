@@ -3,17 +3,13 @@ class TasksController < ApplicationController
     @tasks = Task.all.latest
     if params[:sort_expired]
       @tasks = Task.all.sort_expired #sort_expiredなどスコープは全てモデルに記述
-    end
-    if params[:sort_priority]
+    elsif params[:sort_priority]
       @tasks =Task.all.sort_priority
-    end
-    if (params[:status_search]).present? && (params[:name_search]).present?
-      @tasks = Task.both_search(params[:name_search], params[:status_search]).latest
-    end
-    if params[:name_search].present?
+    elsif params[:name_search].present?
       @tasks = Task.n_search(params[:name_search]).latest
-    end
-    if params[:status_search].present?
+    elsif (params[:name_search]).present? && (params[:status_search]).present?
+      @tasks = Task.both_search(params[:name_search], params[:status_search]).latest
+    elsif params[:status_search].present?
       @tasks = @tasks.s_search(params[:status_search]).latest
     end
     @tasks = @tasks.page(params[:page]) #kaminariのページネーションを追加
