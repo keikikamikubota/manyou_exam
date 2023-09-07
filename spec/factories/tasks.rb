@@ -19,7 +19,7 @@ FactoryBot.define do
     name { 'タイトル3' }
     content { 'コンテント3' }
     expired_at { Time.current + 2.days }
-    status { 1 }
-    priority { 1 }
+    status { 2 }
+    priority { 2 }
   end
 end
