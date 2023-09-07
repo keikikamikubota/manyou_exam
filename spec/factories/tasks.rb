@@ -1,13 +1,25 @@
 FactoryBot.define do
   factory :task do
-    name { 'Factoryで作ったタイトル1' }
-    content { 'Factoryで作ったコンテント1' }
+    name { 'タイトル1' }
+    content { 'コンテント1' }
     expired_at { Time.current + 3.days }
+    status { 0 }
+    priority { 0 }
   end
 
   factory :second_task, class: Task do
-    name { 'Factoryで作ったタイトル2' }
-    content { 'Factoryで作ったコンテント2' }
+    name { 'タイトル2' }
+    content { 'コンテント2' }
     expired_at { Time.current + 4.days }
+    status { 1 }
+    priority { 1 }
+  end
+
+  factory :third_task, class: Task do
+    name { 'タイトル3' }
+    content { 'コンテント3' }
+    expired_at { Time.current + 2.days }
+    status { 1 }
+    priority { 1 }
   end
 end

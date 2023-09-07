@@ -27,7 +27,7 @@
 
     <% @tasks.each do |task|%>
       <tr>
-        <td><%= task.name %></td>
+        <td class="task_names"><%= task.name %></td>
         <td><%= task.content %></td>
         <td class="task_expired_at"><%= l task.expired_at, format: :short %></td>
         <td class="task_row"><%= l task.created_at, format: :short %></td>
@@ -36,6 +36,7 @@
         <td><%= link_to "詳細", task, class: "btn btn-outline-primary" %>
         <td><%= link_to "編集", edit_task_path(task), class: "btn btn-outline-success" %></td>
         <td><%= link_to "削除", task, method: :delete, data: { confirm: '本当に削除しますか？' }, class: "btn btn-outline-secondary" %></td>
+
       </tr>
     <% end %>
 </table>
