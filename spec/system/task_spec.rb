@@ -50,9 +50,10 @@ RSpec.describe 'タスク管理機能', type: :system do
         expect(page).to have_content '未着手'
       end
     end
+  end
 
   describe '検索機能を使う' do
-    context '検索をしたい時'
+    context '検索をしたい時' do
       it 'タイトルのみ入力してタイトル検索の結果がでる' do
         visit tasks_path
         fill_in 'name_search', with: 'タイトル1'
@@ -71,8 +72,15 @@ RSpec.describe 'タスク管理機能', type: :system do
         fill_in 'name_search', with: 'タイトル1'
         select '着手中', from: 'status_search'
         click_on 'ステータスとタスク名の検索'
-        expect(page).to have_content 'タイトル2'
+        expect(page).to have_content 'タイトル1'
         expect(page).to have_content '着手中'
+      end
+      it 'タイトルが不一致、ステータスが一致の場合は検索結果がでない' do
+        visit tasks_path
+        fill_in 'name_search', with: 'タイトル1111111'
+        select '着手中', from: 'status_search'
+        click_on 'ステータスとタスク名の検索'
+        expect(page).to have_no_select '着手中'
       end
     end
     context 'タスクの優先順位でソートをするとき' do
