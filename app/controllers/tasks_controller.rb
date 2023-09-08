@@ -12,6 +12,9 @@ class TasksController < ApplicationController
     elsif params[:status_search].present?
       @tasks = @tasks.s_search(params[:status_search]).latest
     end
+    if @tasks.empty?
+      flash.now[:alert] = "該当の検索結果がありませんでした"
+    end
     @tasks = @tasks.page(params[:page]) #kaminariのページネーションを追加
   end
 
