@@ -1,6 +1,18 @@
 class TasksController < ApplicationController
   def index
-    @tasks = Task.all.order(created_at: :desc)
+    @tasks = Task.all.latest
+    if params[:sort_expired]
+      @tasks = Task.all.sort_expired #sort_expiredなどスコープは全てモデルに記述
+    elsif params[:sort_priority]
+      @tasks =Task.all.sort_priority
+    elsif params[:name_search].present?
+      @tasks = Task.n_search(params[:name_search]).latest
+    elsif (params[:name_search]).present? && (params[:status_search]).present?
+      @tasks = Task.both_search(params[:name_search], params[:status_search]).latest
+    elsif params[:status_search].present?
+      @tasks = @tasks.s_search(params[:status_search]).latest
+    end
+    @tasks = @tasks.page(params[:page]) #kaminariのページネーションを追加
   end
 
   def show
@@ -14,7 +26,6 @@ class TasksController < ApplicationController
   def edit
     @task = Task.find(params[:id])
   end
-
 
   def create
     @task = Task.new(task_params)
@@ -38,12 +49,12 @@ class TasksController < ApplicationController
   def destroy
     @task = Task.find(params[:id])
     @task.destroy
-    redirect_to tasks_path, notice: "タスクが削除されました"
+    redirect_to tasks_path, flash: {success: "タスクが削除されました"}
   end
 
   private
 
   def task_params
-      params.require(:task).permit(:name, :content)
+      params.require(:task).permit(:name, :content, :expired_at, :sort_expired, :status, :priority)
   end
 end

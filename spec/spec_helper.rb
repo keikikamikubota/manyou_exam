@@ -95,4 +95,7 @@ RSpec.configure do |config|
   config.before(:each, type: :system) do
     driven_by(:selenium_chrome)
   end
+  # travel_toやfreeze_timeを使いたくて以下を追記
+  require 'active_support/testing/time_helpers'
+  config.include ActiveSupport::Testing::TimeHelpers
 end

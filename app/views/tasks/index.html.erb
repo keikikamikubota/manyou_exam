@@ -1,25 +1,44 @@
-<p><%= flash[:notice] %></p>
+<h1>タスク一覧</h1>
 
-<h1>Task一覧</h1>
+<%= form_with(url: tasks_path, local: true, method: :get) do |form|%>
+  <%= form.label :"タスク名" %>
+  <%= form.search_field :name_search %>
+  <%= form.label :"ステータス" %>
+  <%= form.select :status_search, Task.statuses.keys.to_a, {include_blank: '選択してください'} %>
+  <%= form.submit "ステータスとタスク名の検索"  %>
+<% end %>
 
-<table>
+<br>
+
+<%= link_to "新規登録", new_task_path, class: "btn btn-primary" %>
+
+<table class="table table-striped">
   <thead>
     <tr>
-      <th>name</th>
-      <th>content</th>
+      <th>タスク名</th>
+      <th>詳しい内容</th>
+      <th><%= link_to "終了期限", tasks_path(sort_expired: "true"), class: "btn btn-outline-primary"  %></th>
+      <th>登録日時</th>
+      <th>ステータス</th>
+      <th><%= link_to "優先度", tasks_path(sort_priority: "true"), class: "btn btn-outline-primary" %></th>
     </tr>
   </thead>
   <tbody>
+
     <% @tasks.each do |task|%>
       <tr>
-        <td><%= task.name %></td>
+        <td class="task_names"><%= task.name %></td>
         <td><%= task.content %></td>
-        <td class="task_row"><%= task.created_at %></td>
-        <td><%= link_to "詳細", task %>
-        <td><%= link_to "編集", edit_task_path(task) %></td>
-        <td><%= link_to "削除", task, method: :delete, data: { confirm: '本当に削除しますか？' } %></td>
+        <td class="task_expired_at"><%= l task.expired_at, format: :short %></td>
+        <td class="task_row"><%= l task.created_at, format: :short %></td>
+        <td><%= task.status %></td>
+        <td class ="task_priority"><%= task.priority %></td>
+        <td><%= link_to "詳細", task, class: "btn btn-outline-primary" %>
+        <td><%= link_to "編集", edit_task_path(task), class: "btn btn-outline-success" %></td>
+        <td><%= link_to "削除", task, method: :delete, data: { confirm: '本当に削除しますか？' }, class: "btn btn-outline-secondary" %></td>
+
       </tr>
     <% end %>
 </table>
 
-<%= link_to "登録する", new_task_path %>
+<%= paginate @tasks %>
