@@ -5,12 +5,17 @@ class UsersController < ApplicationController
     if current_user.id
       flash[:alert] = "すでにユーザー登録済みです"
       redirect_to tasks_path
+    else
+      @user = User.new
     end
-    @user = User.new
   end
 
   def show
     @user = User.find(params[:id])
+    if @user.id != current_user.id
+      flash[:alert] =  "本人以外のユーザー閲覧はできません"
+      redirect_to tasks_path
+    end
   end
 
   def edit
