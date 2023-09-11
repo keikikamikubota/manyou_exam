@@ -1,0 +1,11 @@
+<h1><%= @user.name %>のページ</h1>
+
+<p>名前: <%= @user.name %></p>
+
+<p>メールアドレス: <%= @user.email %></p>
+
+<% if @user.id == current_user.id %>
+  <%= link_to 'ユーザー編集', edit_user_path(@user.id), class: "btn btn-outline-success" %>
+<% end %>
+
+<%= link_to 'Index', tasks_path, class: "btn btn-outline-primary" %>
