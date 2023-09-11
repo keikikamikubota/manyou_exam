@@ -4,8 +4,42 @@
 
 <p>メールアドレス: <%= @user.email %></p>
 
+<h3>タスク一覧</h3>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>タスク名</th>
+      <th>詳しい内容</th>
+       <th> ユーザー名</th>
+      <th>"終了期限"</th>
+      <th>登録日時</th>
+      <th>ステータス</th>
+      <th>優先度</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <% @user.tasks.each do |task|%>
+      <tr>
+        <td class="task_names"><%= task.name %></td>
+        <td><%= task.content %></td>
+        <td><%= link_to current_user.name, user_path(task.user) %></td>
+        <td class="task_expired_at"><%= l task.expired_at, format: :short %></td>
+        <td class="task_row"><%= l task.created_at, format: :short %></td>
+        <td><%= task.status %></td>
+        <td class ="task_priority"><%= task.priority %></td>
+        <td><%= link_to "詳細", task, class: "btn btn-outline-primary" %>
+        <td><%= link_to "編集", edit_task_path(task), class: "btn btn-outline-success" %></td>
+        <td><%= link_to "削除", task, method: :delete, data: { confirm: '本当に削除しますか？' }, class: "btn btn-outline-secondary" %></td>
+
+      </tr>
+    <% end %>
+</table>
+
 <% if @user.id == current_user.id %>
   <%= link_to 'ユーザー編集', edit_user_path(@user.id), class: "btn btn-outline-success" %>
 <% end %>
 
+<br>
+<p>※検索機能はインデックスよりご利用ください</p>
 <%= link_to 'Index', tasks_path, class: "btn btn-outline-primary" %>
