@@ -1,5 +1,11 @@
 class UsersController < ApplicationController
+  skip_before_action :login_required, only: [:new, :create]
+
   def new
+    if current_user.id
+      flash[:alert] = "すでにユーザー登録済みです"
+      redirect_to tasks_path
+    end
     @user = User.new
   end
 
@@ -10,7 +16,7 @@ class UsersController < ApplicationController
   def edit
     @user = User.find(params[:id])
     if @user.id != current_user.id
-      redirect_to pictures_path, notice: "本人以外はユーザー編集ができません"
+      redirect_to user_path(@user.id), notice: "本人以外はユーザー編集ができません"
     end
   end
 
