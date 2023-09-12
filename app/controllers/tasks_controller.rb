@@ -11,8 +11,9 @@ class TasksController < ApplicationController
       @tasks = current_user.tasks.both_search(params[:name_search], params[:status_search]).latest
     elsif params[:status_search].present?
       @tasks = @tasks.s_search(params[:status_search]).latest
-    elsif @tasks.empty?
-        flash.now[:alert] = "タスクが存在しません"
+    end
+    if @tasks.empty?
+      flash.now[:alert] = "タスクが存在しません"
     end
     @tasks = @tasks.page(params[:page]) #kaminariのページネーションを追加
   end
@@ -39,20 +40,20 @@ class TasksController < ApplicationController
 
   end
 
-  def update
-    @task = Task.find(params[:id])
-    if @task.update(task_params)
-      redirect_to tasks_path, notice: "更新が完了しました"
-    else
-      render :edit
-    end
-  end
+  # def update
+  #   @task = Task.find(params[:id])
+  #   if @task.update(task_params)
+  #     redirect_to tasks_path, notice: "更新が完了しました"
+  #   else
+  #     render :edit
+  #   end
+  # end
 
-  def destroy
-    @task = Task.find(params[:id])
-    @task.destroy
-    redirect_to tasks_path, flash: {success: "タスクが削除されました"}
-  end
+  # def destroy
+  #   @task = Task.find(params[:id])
+  #   @task.destroy
+  #   redirect_to tasks_path, flash: {success: "タスクが削除されました"}
+  # end
 
   private
 

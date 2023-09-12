@@ -19,9 +19,13 @@
   <% if logged_in? %>
       <%= link_to current_user.name, user_path(current_user.id), class: "btn btn-light" %>
       <%= link_to "ログアウト", session_path(current_user.id), method: :delete, class: "btn btn-light" %>
+      <%= link_to 'タスク一覧', tasks_path, class: "btn btn-outline-primary" %>
     <% else %>
       <%= link_to "Sign up", new_user_path, class: "btn btn-light" %>
       <%= link_to "Login", new_session_path, class: "btn btn-light" %>
+    <% end %>
+    <% if logged_in? && current_user.admin == true %>
+      <%= link_to '管理者用', admin_users_path, class: "btn btn-outline-success" %>
     <% end %>
   <%= yield %>
   </body>

@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   skip_before_action :login_required, only: [:new, :create]
 
   def new
-    if current_user.id
+    if current_user.present?
       flash[:alert] = "すでにユーザー登録済みです"
       redirect_to tasks_path
     else
