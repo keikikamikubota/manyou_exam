@@ -1,6 +1,6 @@
 class TasksController < ApplicationController
   def index
-    @tasks = current_user.tasks.latest
+    @tasks = current_user.tasks.latest.includes(:user)
     if params[:sort_expired]
       @tasks = current_user.tasks.sort_expired #sort_expiredなどスコープは全てモデルに記述
     elsif params[:sort_priority]
