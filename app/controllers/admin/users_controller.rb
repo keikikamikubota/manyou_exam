@@ -1,6 +1,6 @@
 class Admin::UsersController < ApplicationController
   skip_before_action :login_required, only: [:new, :create]
-  before_action :admin_user?
+  before_action :if_not_admin
 
   def index
     @users = User.all
@@ -40,9 +40,8 @@ class Admin::UsersController < ApplicationController
   def destroy
     @user = User.find(params[:id])
     @user.destroy
-    redirect_to admin_users_path, notice: "ユーザー#{@user.name}を削除しました"
+    redirect_to tasks_path, notice: "ユーザー#{@user.name}を削除しました"
   end
-
 
   private
 

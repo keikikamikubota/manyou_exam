@@ -13,6 +13,7 @@ index # admin
       <th>ユーザー名</th>
       <th>タスク数</th>
       <th>管理権限</th>
+      <th>ユーザー詳細</th>
       <th>ユーザー更新</th>
       <th>ユーザー削除</th>
     </tr>
@@ -23,9 +24,10 @@ index # admin
       <tr>
         <td><%= user.name %></td>
         <td><%= user.tasks.count %></td>
-        <td><%= link_to "詳細", user, class: "btn btn-outline-primary" %>
+        <td><%= user.admin %></td>
+        <td><%= link_to "詳細", admin_user_path(user), class: "btn btn-outline-primary" %>
         <td><%= link_to "編集", edit_admin_user_path(user), class: "btn btn-outline-success" %></td>
-        <td><%= link_to "削除", user, method: :delete, data: { confirm: '本当に削除しますか？' }, class: "btn btn-outline-secondary" %></td>
+        <td><%= link_to "削除", admin_user_path(user), method: :delete, data: { confirm: '本当に削除しますか？' }, class: "btn btn-outline-secondary" %></td>
       </tr>
     <% end %>
 </table>

@@ -18,12 +18,12 @@ class UsersController < ApplicationController
     end
   end
 
-  def edit
-    @user = User.find(params[:id])
-    if @user.id != current_user.id
-      redirect_to user_path(@user.id), notice: "本人以外はユーザー編集ができません"
-    end
-  end
+  # def edit
+  #   @user = User.find(params[:id])
+  #   if @user.id != current_user.id
+  #     redirect_to user_path(@user.id), notice: "本人以外はユーザー編集ができません"
+  #   end
+  # end
 
   def create
     @user = User.new(user_params)
@@ -36,14 +36,14 @@ class UsersController < ApplicationController
     end
   end
 
-  def update
-    @user = User.find(params[:id])
-    if @user.update(user_params)
-      redirect_to user_path, notice: "ユーザー情報を更新しました"
-    else
-      render :edit
-    end
-  end
+  # def update
+  #   @user = User.find(params[:id])
+  #   if @user.update(user_params)
+  #     redirect_to user_path, notice: "ユーザー情報を更新しました"
+  #   else
+  #     render :edit
+  #   end
+  # end
 
 
   private
