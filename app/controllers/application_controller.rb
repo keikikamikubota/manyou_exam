@@ -10,8 +10,8 @@ class ApplicationController < ActionController::Base
 
   def if_not_admin
     if current_user.admin == false
-      flash[:alert] = "管理者ユーザーでログインしてください"
-      redirect_to new_session_path
+      flash[:danger] = "管理者ユーザーでログインしてください"
+      redirect_to tasks_path
     end
   end
 end
