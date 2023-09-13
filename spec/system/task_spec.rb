@@ -1,9 +1,17 @@
 require 'rails_helper'
 RSpec.describe 'タスク管理機能', type: :system do
+  let!(:user) { FactoryBot.create(:user) }
+  let!(:task) { FactoryBot.create(:task, user: user) }
+  let!(:second_task) { FactoryBot.create(:second_task, user: user) }
+  let!(:third_task) { FactoryBot.create(:third_task, user: user) }
+
   before do
-    task = FactoryBot.create(:task)
-    task = FactoryBot.create(:second_task)
-    task = FactoryBot.create(:third_task)
+    travel_to Time.zone.local(2023, 9, 01)
+    visit root_path
+    fill_in 'session_email', with: 'admin1@example.com'
+    fill_in 'session_password', with: 'admin1'
+    click_on 'Log in'
+    sleep 5
   end
 
   describe '一覧表示機能' do
@@ -20,24 +28,19 @@ RSpec.describe 'タスク管理機能', type: :system do
         expect(page).to have_content 'コンテント2'
       end
       it '終了期限も登録されている' do
-        travel_to Time.zone.local(2023, 9, 01) do
-          visit new_task_path
-          task = FactoryBot.create(:third_task) #travel_to内で再度createしないと適応されないため
-          visit tasks_path
           sleep 5 #selenium関連のエラー回避のためsleepを追記
           expect(page).to have_content '2023年09月03日'
-        end
       end
     end
     context '優先順位でソートをするとき' do
       it '終了期限の降順に並び替えられたタスク一覧が表示される' do
-        travel_to Time.zone.local(2023, 9, 01) do
+
           visit tasks_path
           click_on '終了期限'
           sleep 5
           task_list = all('.task_names')
           expect(task_list[0]).to have_content 'タイトル2'
-        end
+
       end
     end
   end

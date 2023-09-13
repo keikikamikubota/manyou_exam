@@ -22,4 +22,5 @@ FactoryBot.define do
     status { 2 }
     priority { 2 }
   end
+
 end
