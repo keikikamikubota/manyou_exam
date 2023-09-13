@@ -7,14 +7,5 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 User.create(name: "かんりしゃ", email: "admin@example.com",
             password: 'admin', password_confirmation: 'admin', admin: true)
-10.times do |n|
-  name = Faker::JapaneseMedia::DragonBall.character
-  email = Faker::Internet.email
-  password = "password"
-  password_confirmation = "password"
-  User.create!(name: name,
-               email: email,
-               password: password,
-               password_confirmation: password
-               )
+
 end
