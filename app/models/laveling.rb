@@ -1,0 +1,2 @@
+class Laveling < ApplicationRecord
+end
