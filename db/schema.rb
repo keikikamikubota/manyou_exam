@@ -10,15 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_09_13_231354) do
+ActiveRecord::Schema.define(version: 2023_09_13_234159) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "lavelings", force: :cascade do |t|
+    t.integer "task_id"
+    t.integer "lavel_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "lavels", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "laveling_id", null: false
+    t.index ["laveling_id"], name: "index_lavels_on_laveling_id"
   end
 
   create_table "tasks", force: :cascade do |t|
@@ -30,6 +39,8 @@ ActiveRecord::Schema.define(version: 2023_09_13_231354) do
     t.integer "status"
     t.integer "priority"
     t.bigint "user_id", null: false
+    t.bigint "laveling_id", null: false
+    t.index ["laveling_id"], name: "index_tasks_on_laveling_id"
     t.index ["name"], name: "index_tasks_on_name"
     t.index ["user_id"], name: "index_tasks_on_user_id"
   end
@@ -44,5 +55,7 @@ ActiveRecord::Schema.define(version: 2023_09_13_231354) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "lavels", "lavelings"
+  add_foreign_key "tasks", "lavelings"
   add_foreign_key "tasks", "users"
 end
