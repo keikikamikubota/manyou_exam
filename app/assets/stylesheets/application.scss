@@ -15,16 +15,18 @@
  */
 @import "bootstrap";
 
-.notifications {
-  color: $white;
+.container {
+  // color: white;
   text-align: center;
+  max-width: 100%;
 
   .notice {
     background-color: lightBlue;
   }
 
   .alert {
-    background-color: alert_orange;
+    background-color: orange;
+    color: white;
   }
 }
 

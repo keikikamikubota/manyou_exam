@@ -1,0 +1,49 @@
+<h1>新規登録</h1>
+<% if @user.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= @user.errors.count %>件のエラーがあります。</h2>
+    <ul>
+    <% @user.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= form_with(model: [:admin, user], local: true) do |f| %>
+  <div class="admin_check">
+    <div>
+      <%= f.label :管理者権限 %>
+    </div>
+    <%= f.check_box :admin %>
+  </div>
+  <div class="user_name">
+    <div>
+      <%= f.label :名前 %>
+    </div>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <div>
+      <%= f.label :メールアドレス %>
+    </div>
+    <%= f.email_field :email %>
+  </div>
+  <div class="field">
+    <div>
+      <div class="field">
+      <%= f.label :パスワード %>
+    </div>
+    <%= f.password_field :password %>
+  </div>
+  <div class="field">
+    <div>
+      <%= f.label :パスワード確認 %>
+    </div>
+    <%= f.password_field :password_confirmation %>
+  </div>
+  <br>
+  <div class="actions">
+    <%= f.submit "ユーザー登録" %>
+  </div>
+<% end %>

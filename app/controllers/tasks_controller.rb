@@ -1,16 +1,19 @@
 class TasksController < ApplicationController
   def index
-    @tasks = Task.all.latest
+    @tasks = current_user.tasks.latest.includes(:user)
     if params[:sort_expired]
-      @tasks = Task.all.sort_expired #sort_expiredなどスコープは全てモデルに記述
+      @tasks = current_user.tasks.sort_expired #sort_expiredなどスコープは全てモデルに記述
     elsif params[:sort_priority]
-      @tasks =Task.all.sort_priority
+      @tasks =current_user.tasks.sort_priority
     elsif params[:name_search].present?
-      @tasks = Task.n_search(params[:name_search]).latest
+      @tasks = current_user.tasks.n_search(params[:name_search]).latest
     elsif (params[:name_search]).present? && (params[:status_search]).present?
-      @tasks = Task.both_search(params[:name_search], params[:status_search]).latest
+      @tasks = current_user.tasks.both_search(params[:name_search], params[:status_search]).latest
     elsif params[:status_search].present?
       @tasks = @tasks.s_search(params[:status_search]).latest
+    end
+    if @tasks.empty?
+      flash.now[:alert] = "タスクが存在しません"
     end
     @tasks = @tasks.page(params[:page]) #kaminariのページネーションを追加
   end
@@ -28,7 +31,7 @@ class TasksController < ApplicationController
   end
 
   def create
-    @task = Task.new(task_params)
+    @task = current_user.tasks.build(task_params)
     if @task.save
       redirect_to tasks_path, notice: "タスクが登録できました"
     else
