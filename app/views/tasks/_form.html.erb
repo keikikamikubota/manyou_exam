@@ -34,6 +34,12 @@
     <%= form.select :priority, Task.priorities.keys.to_a, { include_blank: '選択してください' } %>
   </div>
 
+
+  <div class="field">
+    <% Lavel %>
+    <%= form.check_box  %>
+  </div>
+
   <br>
 
   <%= form.submit "登録する" %>

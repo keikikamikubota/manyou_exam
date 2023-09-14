@@ -4,6 +4,8 @@ class Task < ApplicationRecord
 
   belongs_to :user
 
+  belongs_to :labeling
+
   scope :latest, -> {order(created_at: :desc)}
   scope :sort_expired, -> {order(expired_at: :desc)}
   scope :sort_priority, -> {order(priority: :asc)}
