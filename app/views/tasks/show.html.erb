@@ -3,6 +3,12 @@
   <strong>タスク名:</strong> <%= @task.name %>
 </p>
 <p>
+  <strong>ラベル:</strong>
+    <% @task.labels.each do |n| %>
+      <%= n.title %>
+    <% end %>
+</p>
+<p>
   <strong>詳しい内容:</strong> <%= @task.content %>
 </p>
 <p>

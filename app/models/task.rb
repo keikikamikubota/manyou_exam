@@ -5,7 +5,7 @@ class Task < ApplicationRecord
   belongs_to :user
 
   has_many :labeling, dependent: :destroy
-  has_many :relation_labels, through: :labeling, source: :label
+  has_many :labels, through: :labeling, source: :label
 
   scope :latest, -> {order(created_at: :desc)}
   scope :sort_expired, -> {order(expired_at: :desc)}
