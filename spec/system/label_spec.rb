@@ -35,7 +35,7 @@ RSpec.describe 'STEP5 ラベル管理機能', type: :system do
         uncheck '事前登録済ラベル'
         click_on '登録する'
         expect(page).to have_checked_field('ラベル1')
-        expect(page).not_to have_checked_field('事前登録済ラベル')
+        expect(page).not_to have_checked_field('事前登録済ラベル') #二つexpect書いてより精度を上げた
       end
     end
   end
