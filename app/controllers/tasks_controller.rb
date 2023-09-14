@@ -15,6 +15,11 @@ class TasksController < ApplicationController
     if @tasks.empty?
       flash.now[:alert] = "タスクが存在しません"
     end
+    if params[:label_search]
+      @tasks = current_user.tasks.l_search(params[:label_search]).latest
+    else
+      flash.now[:alert] = "該当のラベルでの登録はありません"
+    end
     @tasks = @tasks.page(params[:page]) #kaminariのページネーションを追加
   end
 
@@ -59,6 +64,6 @@ class TasksController < ApplicationController
 
   def task_params
       params.require(:task).permit(:name, :content, :expired_at, :sort_expired,
-                                  :status, :priority, label_ids: [])
+                                  :status, :priority, label_ids: []) #label_idsはログを見ると配列に格納されているため
   end
 end
