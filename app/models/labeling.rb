@@ -1,4 +1,4 @@
 class Labeling < ApplicationRecord
-  has_many :tasks
-  has_many :labels
+  belongs_to :task
+  belongs_to :label
 end

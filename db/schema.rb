@@ -10,24 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_09_14_000046) do
+ActiveRecord::Schema.define(version: 2023_09_14_020330) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "labelings", force: :cascade do |t|
-    t.integer "task_id"
-    t.integer "label_id"
+    t.bigint "task_id", null: false
+    t.bigint "label_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["label_id"], name: "index_labelings_on_label_id"
+    t.index ["task_id"], name: "index_labelings_on_task_id"
   end
 
   create_table "labels", force: :cascade do |t|
     t.string "title"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "labeling_id", null: false
-    t.index ["labeling_id"], name: "index_labels_on_labeling_id"
   end
 
   create_table "tasks", force: :cascade do |t|
@@ -39,8 +39,6 @@ ActiveRecord::Schema.define(version: 2023_09_14_000046) do
     t.integer "status"
     t.integer "priority"
     t.bigint "user_id", null: false
-    t.bigint "labeling_id", null: false
-    t.index ["labeling_id"], name: "index_tasks_on_labeling_id"
     t.index ["name"], name: "index_tasks_on_name"
     t.index ["user_id"], name: "index_tasks_on_user_id"
   end
@@ -55,7 +53,7 @@ ActiveRecord::Schema.define(version: 2023_09_14_000046) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
-  add_foreign_key "labels", "labelings"
-  add_foreign_key "tasks", "labelings"
+  add_foreign_key "labelings", "labels"
+  add_foreign_key "labelings", "tasks"
   add_foreign_key "tasks", "users"
 end
