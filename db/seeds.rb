@@ -9,14 +9,10 @@ User.create(name: "かんりしゃ", email: "admin@example.com",
             password: 'admin', password_confirmation: 'admin', admin: true)
 
 10.times do |n|
-  name = "シードくん#{n + 1}",
-  email = "seedtest#{n + 1}@test.com",
-  password = "password#{n + 1}"
-  password_confirmation = "password#{n + 1}"
-  User.create!(name: name,
-               email: email,
-               password: password,
-               password_confirmation: password
+  User.create!(name: "シードくん#{n + 1}",
+               email: "seedtest#{n + 1}@test.com",
+               password: "password#{n + 1}",
+               password_confirmation: "password#{n + 1}"
                )
 end
 
