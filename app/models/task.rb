@@ -4,12 +4,16 @@ class Task < ApplicationRecord
 
   belongs_to :user
 
-  scope :latest, -> {order(created_at: :desc)}
-  scope :sort_expired, -> {order(expired_at: :desc)}
-  scope :sort_priority, -> {order(priority: :asc)}
+  has_many :labeling, dependent: :destroy
+  has_many :labels, through: :labeling, source: :label
+
+  scope :latest, -> { order(created_at: :desc) }
+  scope :sort_expired, -> { order(expired_at: :desc) }
+  scope :sort_priority, -> { order(priority: :asc) }
   scope :n_search, -> (name_param){ where("name LIKE?", "%#{name_param}%") }
   scope :s_search, -> (status_param){ where(status: (status_param)) }
   scope :both_search, -> (name_param, status_param){ where("name LIKE?", "%#{name_param}%").where(status: (status_param)) }
+  scope :l_search, -> (label_param){ joins(:labels).where(labels: { id: (label_param) }) }
 
   enum status:{ 未着手: 0, 着手中: 1, 完了: 2 }
   enum priority:{ 高: 0, 中: 1, 低: 2 }

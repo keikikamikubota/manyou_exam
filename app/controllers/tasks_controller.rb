@@ -5,14 +5,21 @@ class TasksController < ApplicationController
       @tasks = current_user.tasks.sort_expired #sort_expiredなどスコープは全てモデルに記述
     elsif params[:sort_priority]
       @tasks =current_user.tasks.sort_priority
-    elsif params[:name_search].present?
+    end
+    if params[:name_search].present?
       @tasks = current_user.tasks.n_search(params[:name_search]).latest
     elsif (params[:name_search]).present? && (params[:status_search]).present?
       @tasks = current_user.tasks.both_search(params[:name_search], params[:status_search]).latest
     elsif params[:status_search].present?
       @tasks = @tasks.s_search(params[:status_search]).latest
     end
-    if @tasks.empty?
+    if params[:label_search].present?
+      @tasks = current_user.tasks.l_search(params[:label_search]).latest
+      if @tasks.empty?
+        flash.now[:alert] = "該当のラベルでの登録はありません"
+      end
+    end
+    if @tasks.empty? && params[:label_search].nil?
       flash.now[:alert] = "タスクが存在しません"
     end
     @tasks = @tasks.page(params[:page]) #kaminariのページネーションを追加
@@ -58,6 +65,7 @@ class TasksController < ApplicationController
   private
 
   def task_params
-      params.require(:task).permit(:name, :content, :expired_at, :sort_expired, :status, :priority)
+      params.require(:task).permit(:name, :content, :expired_at, :sort_expired,
+                                  :status, :priority, label_ids: []) #label_idsはログを見ると配列に格納されているため
   end
 end

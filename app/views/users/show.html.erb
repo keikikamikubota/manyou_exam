@@ -9,6 +9,7 @@
   <thead>
     <tr>
       <th>タスク名</th>
+      <th>ラベル</th>
       <th>詳しい内容</th>
       <th> ユーザー名</th>
       <th>終了期限</th>
@@ -21,6 +22,11 @@
     <% @user.tasks.each do |task|%>
       <tr>
         <td class="task_names"><%= task.name %></td>
+        <td>
+          <% task.labels.each do |n| %>
+            <%= n.title %>
+          <% end %>
+        </td>
         <td><%= task.content %></td>
         <td><%= link_to current_user.name, user_path(task.user) %></td>
         <td class="task_expired_at"><%= l task.expired_at, format: :short %></td>
